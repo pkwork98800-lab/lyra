@@ -1,0 +1,32 @@
+{
+  "name": "@proj-lyra/lyra-plugin-web-extension",
+  "type": "module",
+  "version": "0.14.1",
+  "private": true,
+  "description": "manifest.json description",
+  "scripts": {
+    "dev": "wxt",
+    "dev:firefox": "wxt -b firefox",
+    "build": "wxt build",
+    "build:firefox": "wxt build -b firefox",
+    "zip": "wxt zip",
+    "zip:firefox": "wxt zip -b firefox",
+    "compile": "vue-tsc --noEmit",
+    "postinstall": "wxt prepare"
+  },
+  "devDependencies": {
+    "@iconify-json/solar": "catalog:",
+    "@iconify-json/svg-spinners": "catalog:",
+    "@proj-lyra/eventa": "catalog:",
+    "@proj-lyra/server-sdk": "workspace:^",
+    "@proj-lyra/std": "catalog:",
+    "@proj-lyra/ui": "workspace:^",
+    "@unocss/reset": "catalog:",
+    "@vueuse/core": "catalog:",
+    "@wxt-dev/module-vue": "catalog:",
+    "nanoid": "catalog:",
+    "vue": "catalog:",
+    "vue-tsc": "catalog:",
+    "wxt": "catalog:"
+  }
+}

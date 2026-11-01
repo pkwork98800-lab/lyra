@@ -1,0 +1,47 @@
+{
+  "manifestVersion": 2,
+  "kind": "manifest.extension.lyra.local",
+  "id": "devtools-sample-plugin",
+  "version": "1.0.0",
+  "engines": {
+    "lyra": "*",
+    "runtimes": [
+      "electron"
+    ]
+  },
+  "entrypoints": {
+    "electron": "./devtools-sample-plugin.mjs"
+  },
+  "permissions": {
+    "apis": [
+      {
+        "key": "proj-lyra:plugin-sdk:apis:protocol:capabilities:wait",
+        "actions": [
+          "invoke"
+        ]
+      },
+      {
+        "key": "proj-lyra:plugin-sdk:apis:protocol:resources:providers:list-providers",
+        "actions": [
+          "invoke"
+        ]
+      }
+    ],
+    "resources": [
+      {
+        "key": "proj-lyra:plugin-sdk:apis:protocol:resources:providers:list-providers",
+        "actions": [
+          "read"
+        ]
+      }
+    ],
+    "capabilities": [
+      {
+        "key": "proj-lyra:plugin-sdk:apis:protocol:resources:providers:list-providers",
+        "actions": [
+          "wait"
+        ]
+      }
+    ]
+  }
+}

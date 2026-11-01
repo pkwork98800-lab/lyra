@@ -1,0 +1,33 @@
+{
+  "name": "@proj-lyra/lyra-plugin-vscode",
+  "type": "module",
+  "version": "0.14.1",
+  "private": true,
+  "description": "LYRA host plugin that bridges VS Code context and UI",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lyra-org/lyra.git",
+    "directory": "integrations/vscode/lyra-plugin-vscode"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.mts",
+      "default": "./dist/index.mjs"
+    }
+  },
+  "main": "./dist/index.mjs",
+  "types": "./dist/index.d.mts",
+  "files": [
+    "README.md",
+    "dist",
+    "package.json"
+  ],
+  "scripts": {
+    "dev": "pnpm run build",
+    "build": "tsdown",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@proj-lyra/plugin-sdk": "workspace:*"
+  }
+}

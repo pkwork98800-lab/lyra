@@ -1,0 +1,58 @@
+{
+  "name": "@proj-lyra/unplugin-live2d-sdk",
+  "type": "module",
+  "version": "0.1.7",
+  "description": "Vite plugin to download Live2D SDK",
+  "author": {
+    "name": "Project LYRA Team",
+    "email": "lyra-team@lyra.local",
+    "url": "https://github.com/proj-lyra"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/proj-lyra/unplugin-live2d-sdk.git"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/vite/index.d.ts",
+      "import": "./dist/vite/index.mjs",
+      "require": "./dist/vite/index.cjs"
+    },
+    "./vite": {
+      "types": "./dist/vite/index.d.ts",
+      "import": "./dist/vite/index.mjs",
+      "node": "./dist/vite/index.cjs"
+    }
+  },
+  "main": "./dist/vite/index.cjs",
+  "module": "./dist/vite/index.mjs",
+  "types": "./dist/vite/index.d.ts",
+  "files": [
+    "README.md",
+    "dist",
+    "package.json"
+  ],
+  "scripts": {},
+  "dependencies": {
+    "ofetch": "^1.5.1",
+    "vite": "^8.0.8",
+    "yauzl": "^3.3.0"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^8.2.0",
+    "@antfu/ni": "^30.0.0",
+    "@types/node": "catalog:",
+    "@types/yauzl": "^2.10.3",
+    "bumpp": "^11.0.1",
+    "changelogithub": "^14.0.0",
+    "eslint": "^10.2.0",
+    "eslint-plugin-format": "^2.0.1",
+    "lint-staged": "^16.4.0",
+    "rollup": "^4.60.1",
+    "simple-git-hooks": "^2.13.1",
+    "taze": "^19.11.0",
+    "typescript": "^6.0.2",
+    "unbuild": "^3.6.1"
+  }
+}

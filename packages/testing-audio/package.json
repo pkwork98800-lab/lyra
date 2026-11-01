@@ -1,0 +1,38 @@
+{
+  "name": "@proj-lyra/testing-audio",
+  "type": "module",
+  "version": "0.14.1",
+  "private": true,
+  "description": "LYRA Web and Electron audio pipeline tests",
+  "author": {
+    "name": "Project LYRA Team",
+    "email": "lyra@lyra.local",
+    "url": "https://github.com/lyra-org"
+  },
+  "license": "MIT",
+  "exports": "./src/index.ts",
+  "scripts": {
+    "build:targets": "pnpm -F @proj-lyra/stage-web build && pnpm -F @proj-lyra/stage-tamagotchi build",
+    "test": "vitest",
+    "test:e2e": "pnpm run build:targets && vitest run",
+    "test:existing-builds": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@pnpm/find-workspace-dir": "catalog:",
+    "@proj-lyra/provider-inference": "workspace:^",
+    "@proj-lyra/stage-shared": "workspace:^",
+    "@proj-lyra/stage-ui": "workspace:^",
+    "@proj-lyra/std": "catalog:",
+    "@proj-lyra/trace-kit": "workspace:^",
+    "@proj-lyra/vitest-plugin-fakemic": "workspace:^",
+    "playwright": "catalog:",
+    "vite": "catalog:",
+    "vitest": "catalog:vitest"
+  },
+  "devDependencies": {
+    "@proj-lyra/audio": "workspace:^",
+    "@proj-lyra/pipelines-audio": "workspace:^",
+    "@types/node": "catalog:"
+  }
+}

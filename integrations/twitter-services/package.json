@@ -1,0 +1,23 @@
+{
+  "name": "@proj-lyra/twitter-services",
+  "type": "module",
+  "version": "0.14.1",
+  "private": true,
+  "description": "Twitter Services for MCP",
+  "author": "RainbowBird <rbxin2003@outlook.com>",
+  "license": "MIT",
+  "scripts": {
+    "dev": "playwright install chromium && tsx --env-file=.env.local src/main.ts",
+    "mcp:ui": "pnpx @modelcontextprotocol/inspector",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@guiiai/logg": "catalog:",
+    "@modelcontextprotocol/sdk": "catalog:",
+    "@proj-lyra/server-sdk": "workspace:*",
+    "@proj-lyra/std": "catalog:",
+    "h3": "catalog:",
+    "playwright": "catalog:",
+    "zod": "catalog:"
+  }
+}

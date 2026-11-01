@@ -1,0 +1,39 @@
+{
+  "name": "@proj-lyra/input-gamepad",
+  "type": "module",
+  "version": "0.14.1",
+  "private": true,
+  "description": "Standard Gamepad API input for LYRA",
+  "author": {
+    "name": "Project LYRA Team",
+    "email": "lyra@lyra.local",
+    "url": "https://github.com/lyra-org"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lyra-org/lyra.git",
+    "directory": "packages/input-gamepad"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "README.md",
+    "dist",
+    "package.json"
+  ],
+  "scripts": {
+    "test:run": "vitest run --config vitest.config.ts",
+    "build": "tsdown",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}

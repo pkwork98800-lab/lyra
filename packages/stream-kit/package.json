@@ -1,0 +1,38 @@
+{
+  "name": "@proj-lyra/stream-kit",
+  "type": "module",
+  "version": "0.14.1",
+  "private": true,
+  "description": "Lifetime, scheduling, and stream utilities for LYRA",
+  "author": {
+    "name": "Project LYRA Team",
+    "email": "lyra@lyra.local",
+    "url": "https://github.com/lyra-org"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lyra-org/lyra.git",
+    "directory": "packages/stream-kit"
+  },
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.mts",
+      "default": "./dist/index.mjs"
+    }
+  },
+  "main": "./dist/index.mjs",
+  "types": "./dist/index.d.mts",
+  "files": [
+    "README.md",
+    "dist",
+    "package.json"
+  ],
+  "scripts": {
+    "test:run": "vitest run --config vitest.config.ts",
+    "build": "tsdown",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {}
+}

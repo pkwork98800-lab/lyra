@@ -1,0 +1,35 @@
+{
+  "name": "@proj-lyra/mathjson",
+  "type": "module",
+  "version": "0.14.1",
+  "private": true,
+  "description": "MathJSON types and helpers, with the heads that speech readings add",
+  "author": {
+    "name": "Project LYRA Team",
+    "email": "lyra@lyra.local",
+    "url": "https://github.com/lyra-org"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lyra-org/lyra.git",
+    "directory": "packages/mathjson"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.mts",
+      "default": "./dist/index.mjs"
+    }
+  },
+  "main": "./dist/index.mjs",
+  "types": "./dist/index.d.mts",
+  "files": [
+    "README.md",
+    "dist",
+    "package.json"
+  ],
+  "scripts": {
+    "build": "tsdown",
+    "typecheck": "tsc --noEmit"
+  }
+}

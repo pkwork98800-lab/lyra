@@ -1,0 +1,54 @@
+{
+  "name": "@proj-lyra/three-mmd",
+  "type": "module",
+  "version": "0.2.0-beta.2",
+  "description": "Use MMD on Three.js",
+  "author": "LYRA",
+  "license": "MIT",
+  "homepage": "https://github.com/lyra-org/three-mmd",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lyra-org/three-mmd.git",
+    "directory": "packages/three-mmd"
+  },
+  "bugs": "https://github.com/lyra-org/three-mmd/issues",
+  "keywords": [
+    "threejs",
+    "three",
+    "mmd"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./materials": {
+      "types": "./dist/materials/index.d.ts",
+      "default": "./dist/materials/index.js"
+    },
+    "./materials/physical": {
+      "types": "./dist/materials/physical.d.ts",
+      "default": "./dist/materials/physical.js"
+    },
+    "./materials/toon": {
+      "types": "./dist/materials/toon.d.ts",
+      "default": "./dist/materials/toon.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {},
+  "peerDependencies": {
+    "@types/three": ">=0.184.0",
+    "three": ">=0.184.0"
+  },
+  "devDependencies": {
+    "@types/three": "^0.185.1",
+    "babylon-mmd": "^1.3.0",
+    "three": "^0.185.1"
+  }
+}

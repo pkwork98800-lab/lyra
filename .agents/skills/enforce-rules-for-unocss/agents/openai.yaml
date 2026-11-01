@@ -1,0 +1,4 @@
+interface:
+  display_name: "Enforce UnoCSS Rules"
+  short_description: "Apply LYRA styling and component standards"
+  default_prompt: "Use $enforce-rules-for-unocss to implement or review LYRA UI styling."

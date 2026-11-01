@@ -1,0 +1,43 @@
+{
+  "name": "@proj-lyra/component-calling",
+  "type": "module",
+  "private": true,
+  "description": "Realtime audio",
+  "author": {
+    "name": "Project LYRA Team",
+    "email": "lyra@lyra.local",
+    "url": "https://github.com/lyra-org"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lyra-org/lyra.git",
+    "directory": "apps/component-calling"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "typecheck": "vue-tsc --noEmit"
+  },
+  "dependencies": {
+    "@proj-lyra/ui": "workspace:^",
+    "@vueuse/core": "catalog:",
+    "@xsai/generate-text": "catalog:",
+    "@xsai/shared-chat": "catalog:",
+    "@xsai/stream-text": "catalog:",
+    "valibot": "catalog:",
+    "vue": "catalog:",
+    "xsschema": "catalog:"
+  },
+  "devDependencies": {
+    "@iconify-json/solar": "catalog:",
+    "@iconify-json/svg-spinners": "catalog:",
+    "@types/xast": "catalog:",
+    "@unocss/reset": "catalog:",
+    "@vitejs/plugin-vue": "catalog:",
+    "vite": "catalog:",
+    "vue-router": "catalog:",
+    "vue-tsc": "catalog:"
+  }
+}

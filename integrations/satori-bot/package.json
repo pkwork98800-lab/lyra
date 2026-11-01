@@ -1,0 +1,43 @@
+{
+  "name": "@proj-lyra/satori-bot",
+  "type": "module",
+  "private": true,
+  "description": "Satori protocol adapter for LYRA - Connect to multiple chat platforms via Satori",
+  "author": {
+    "name": "Project LYRA Team",
+    "email": "lyra@lyra.local",
+    "url": "https://github.com/lyra-org"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lyra-org/lyra.git",
+    "directory": "integrations/satori-bot"
+  },
+  "scripts": {
+    "start": "tsx --env-file=.env --env-file-if-exists=.env.local src/index.ts",
+    "dev": "tsx watch --env-file=.env --env-file-if-exists=.env.local src/index.ts",
+    "typecheck": "tsc --noEmit",
+    "db:generate": "drizzle-kit generate",
+    "db:push": "drizzle-kit push"
+  },
+  "dependencies": {
+    "@electric-sql/pglite": "catalog:",
+    "@guiiai/logg": "catalog:",
+    "@proj-lyra/std": "catalog:",
+    "@velin-dev/core": "catalog:",
+    "@xsai/generate-text": "catalog:",
+    "@xsai/shared-chat": "catalog:",
+    "@xsai/utils-chat": "catalog:",
+    "best-effort-json-parser": "catalog:",
+    "drizzle-orm": "catalog:",
+    "es-toolkit": "catalog:",
+    "nanoid": "catalog:",
+    "valibot": "catalog:",
+    "ws": "catalog:"
+  },
+  "devDependencies": {
+    "@types/ws": "catalog:",
+    "drizzle-kit": "catalog:"
+  }
+}

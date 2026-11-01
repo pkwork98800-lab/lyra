@@ -1,0 +1,168 @@
+import type { PiniaActionEvent, PiniaActionEventStatus } from '@proj-lyra/stage-shared/types/pinia-action-event'
+import type { TraceAttributes, TraceIds, TraceRecord, TraceStatus } from '@proj-lyra/trace-kit'
+import type { AudioCapture, AudioCaptureFormat, AudioTestCase, AudioTestPreflightCallback, AudioTestSession } from '@proj-lyra/vitest-plugin-fakemic'
+import type { ElectronApplication, Page } from 'playwright'
+
+export const audioInputTargets = ['web', 'electron'] as const
+
+export type AudioInputTarget = (typeof audioInputTargets)[number]
+
+/** Audio pipelines that need case-specific runner preparation. */
+export type AudioInputPipeline = 'kws'
+
+/** Values available when one case resolves its preflight callbacks. */
+export interface AudioInputPreflightContext {
+  /** Environment variables loaded for this case. */
+  env: Readonly<NodeJS.ProcessEnv>
+  /** Clean runtime that the configuration callback can prepare. */
+  runtime: AudioInputSession
+  /** Skips this case when its environment does not satisfy a case constraint. */
+  skip: (condition: unknown, note?: string) => void
+}
+
+/** One optional case callback that resolves configuration from its environment. */
+export type AudioInputPreflightCallback = AudioTestPreflightCallback<AudioInputPreflightContext>
+
+/** One LYRA audio-input test definition. */
+export interface AudioInputTestCase extends AudioTestCase<AudioInputPreflightContext> {
+  /**
+   * Selects pipelines that the runner prepares before the file microphone starts.
+   * For `kws` on Web, the runner downloads and verifies the pinned wake word model.
+   * @default []
+   */
+  pipelines?: readonly AudioInputPipeline[]
+}
+
+/** One ended span, folded from the trace records of the pages. Times are on the clock of the page that wrote it. */
+export interface AudioInputSpan {
+  spanId: string
+  name: string
+  track: string
+  ids: TraceIds
+  /** Merged attributes of the begin, updates, and end. */
+  attrs: TraceAttributes
+  start: number
+  end: number
+  status: TraceStatus
+  message?: string
+}
+
+/** Snapshot of the observable LYRA audio pipeline state. */
+export interface AudioInputSnapshot {
+  piniaActionEvents: PiniaActionEvent[]
+  /** Trace records that the probes of the pages received. */
+  records: TraceRecord[]
+  streamingTranscriptionUpdates: string[]
+  transcriptionResults: string[]
+  voiceInputs: AudioInputVoiceInput[]
+}
+
+/** One speech input that the voice host began, from the first host snapshot that contains it. */
+export interface AudioInputVoiceInput {
+  requestId: string
+  /** Chat session that receives the transcript. A wake selects the session of the character that owns the wake word. */
+  sessionId: string
+}
+
+/** One rendered chat message from the completed turn. */
+export interface AudioInputChatMessage {
+  role: 'assistant' | 'user'
+  text: string
+}
+
+/** One LLM input message represented without its potentially sensitive content. */
+export interface AudioInputLLMMessage {
+  role: string
+}
+
+/** One text chunk emitted by the LLM stream. */
+export interface AudioInputLLMOutputChunk {
+  characters: number
+}
+
+/** One synthesized audio segment routed from the LLM turn. */
+export interface AudioInputTTSSegment {
+  durationMs: number
+  text: string
+}
+
+/** Structured observations for one completed voice interaction turn. */
+export interface AudioInputTurn {
+  id: string
+  chat: {
+    messages: AudioInputChatMessage[]
+  }
+  llm: {
+    inputMessages: AudioInputLLMMessage[]
+    outputCharacters: number
+    outputChunks: AudioInputLLMOutputChunk[]
+  }
+  tts: {
+    audioSegments: AudioInputTTSSegment[]
+  }
+}
+
+/** Observable audio values used by LYRA matchers. */
+export interface AudioInputObservations {
+  /** Capture format used by the active transcription Provider. */
+  transcriptionCaptureFormat?: AudioCaptureFormat
+  capturedTranscriptionAudio: (count: number) => Promise<AudioCapture[]>
+  streamingTranscriptionUpdates: () => Promise<string[]>
+  transcriptionResults: (count: number) => Promise<string[]>
+  /** Ended spans of the trace records of the pages, in start order. */
+  completedSpans: (name?: string) => Promise<AudioInputSpan[]>
+  /** Waits until all speech work for the latest LLM turn is complete. */
+  waitForTurn: (options?: {
+    /** @default 60000 */
+    timeout?: number
+  }) => Promise<AudioInputTurn>
+  /** Returns the Pinia action events collected by the runtime probe. */
+  piniaActionEvents: () => Promise<PiniaActionEvent[]>
+  /** Waits until a streaming transcription transport accepts microphone audio. */
+  waitForStreamingTranscriptionReady: () => Promise<void>
+  /**
+   * Waits until the voice host begins a speech input, and returns the first input since the page loaded.
+   *
+   * @example
+   * const input = await audio.waitForVoiceInput({ timeout: 90_000 })
+   * expect(input.sessionId).toBe(expectedSessionId)
+   */
+  waitForVoiceInput: (options?: {
+    /** @default 60000 */
+    timeout?: number
+  }) => Promise<AudioInputVoiceInput>
+  /**
+   * Waits for the next matching Pinia action event after this method is called.
+   *
+   * @example
+   * const completed = audio.waitForPiniaAction({
+   *   storeId: 'modules:hearing:speech:audio-input-pipeline',
+   *   actionName: 'transcribeForMediaStream',
+   * })
+   * await enableButton.click()
+   * await completed
+   */
+  waitForPiniaAction: (options: {
+    storeId: string
+    actionName: string
+    /** @default 'completed' */
+    status?: PiniaActionEventStatus
+    /** @default 60000 */
+    timeout?: number
+  }) => Promise<PiniaActionEvent>
+}
+
+/** Runtime handle for one LYRA audio-input test. */
+export interface AudioInputSession extends AudioInputObservations, AudioTestSession {
+  /** Electron application for Electron tasks. */
+  electronApp?: ElectronApplication
+  /** Page used by case interactions. */
+  page: Page
+  /** Page that owns the audio-input pipeline. */
+  runtimePage: Page
+  /** Runtime selected for this concrete task. */
+  target: AudioInputTarget
+  /** Selects the page used by subsequent case interactions. */
+  activatePage: (page: Page) => void
+  snapshot: () => Promise<AudioInputSnapshot>
+}

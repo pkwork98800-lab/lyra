@@ -1,0 +1,238 @@
+import type { Client, ContextUpdate, ModuleAnnouncedEvent } from '@proj-lyra/server-sdk'
+
+import type { EventBus } from '../cognitive/event-bus'
+
+import { useLogg } from '@guiiai/logg'
+import { ContextUpdateStrategy } from '@proj-lyra/server-sdk'
+import { nanoid } from 'nanoid'
+
+interface SparkCommandData {
+  commandId: string
+  intent: 'plan' | 'proposal' | 'action' | 'pause' | 'resume' | 'reroute' | 'context'
+  interrupt: 'force' | 'soft' | false
+  priority: 'critical' | 'high' | 'normal' | 'low'
+  guidance?: {
+    options?: Array<{ label: string, steps: string[] }>
+  }
+}
+
+/**
+ * Connects the Minecraft cognitive runtime to LYRA server events.
+ *
+ * Use when:
+ * - Minecraft must publish context and notifications to Stage runtimes.
+ * - Generic `spark:command` events must wake the Minecraft decision loop.
+ *
+ * Expects:
+ * - {@link init} is called once before events are exchanged.
+ * - {@link setCommandAvailable} follows the active bot lifecycle.
+ *
+ * Returns:
+ * - Event handlers and send operations for the Minecraft side of the LYRA server seam.
+ */
+export class LyraBridge {
+  private readonly logger = useLogg('lyra-bridge').useGlobalConfig()
+  private commandAvailable = false
+  private commandHandler: ((event: { data: SparkCommandData }) => void) | null = null
+  private contextUpdateHandler: ((event: { data: ContextUpdate }) => void) | null = null
+  private moduleAnnouncedHandler: ((event: { data: ModuleAnnouncedEvent }) => void) | null = null
+  private readonly moduleAnnouncedListeners = new Set<(event: ModuleAnnouncedEvent) => void>()
+
+  constructor(
+    private readonly client: Client,
+    private readonly eventBus: EventBus,
+  ) {}
+
+  init(): void {
+    this.commandHandler = (event) => {
+      const cmd = event.data
+      this.logger.log('Received spark:command', { intent: cmd.intent, commandId: cmd.commandId })
+
+      if (!this.commandAvailable) {
+        this.sendEmit(cmd.commandId, 'dropped', 'Minecraft bot is offline')
+        return
+      }
+
+      this.sendEmit(cmd.commandId, 'queued', 'Command received')
+
+      // A spark:command is high-level guidance from the LYRA server. It must carry enough weight to
+      // trigger a fresh decision (Conscious) cycle, never be silently filed into history — so we
+      // always route it through handleActionIntent (→ signal:lyra_command → enqueueEvent → decision cycle).
+      //
+      // We intentionally do not special-case `intent === 'context'`: that branch used to emit
+      // signal:lyra_context which Brain pushes to conversationHistory WITHOUT waking the loop, so a
+      // command that mislabels its intent as "context" would be silently dropped from action. True
+      // passive context still has its own dedicated channel — `context:update` (see
+      // contextUpdateHandler) — which remains history-only and is unaffected by this routing.
+      this.handleActionIntent(cmd)
+    }
+
+    this.contextUpdateHandler = (event) => {
+      const ctx = event.data
+      this.logger.log('Received context:update', { lane: ctx.lane, preview: ctx.text.slice(0, 80) })
+
+      this.eventBus.emit({
+        type: 'signal:lyra_context',
+        payload: Object.freeze({
+          type: 'lyra_context' as const,
+          description: ctx.text,
+          sourceId: 'lyra',
+          confidence: 1.0,
+          timestamp: Date.now(),
+          metadata: {
+            source: 'lyra',
+            contextId: ctx.contextId,
+            lane: ctx.lane ?? 'general',
+            hints: ctx.hints ?? [],
+          },
+        }),
+        source: { component: 'lyra', id: 'bridge' },
+      })
+    }
+
+    this.moduleAnnouncedHandler = (event) => {
+      const moduleAnnouncement = event.data
+      this.logger.log('Received module:announced', { name: moduleAnnouncement.name, pluginId: moduleAnnouncement.identity?.plugin?.id })
+      for (const listener of this.moduleAnnouncedListeners) {
+        listener(moduleAnnouncement)
+      }
+    }
+
+    this.client.onEvent('spark:command', this.commandHandler as Parameters<typeof this.client.onEvent<'spark:command'>>[1])
+    this.client.onEvent('context:update', this.contextUpdateHandler as Parameters<typeof this.client.onEvent<'context:update'>>[1])
+    this.client.onEvent('module:announced', this.moduleAnnouncedHandler as Parameters<typeof this.client.onEvent<'module:announced'>>[1])
+    this.logger.log('LyraBridge initialized, listening for spark:command, context:update, and module:announced')
+  }
+
+  destroy(): void {
+    if (this.commandHandler) {
+      this.client.offEvent('spark:command', this.commandHandler as Parameters<typeof this.client.offEvent<'spark:command'>>[1])
+      this.commandHandler = null
+    }
+    if (this.contextUpdateHandler) {
+      this.client.offEvent('context:update', this.contextUpdateHandler as Parameters<typeof this.client.offEvent<'context:update'>>[1])
+      this.contextUpdateHandler = null
+    }
+    if (this.moduleAnnouncedHandler) {
+      this.client.offEvent('module:announced', this.moduleAnnouncedHandler as Parameters<typeof this.client.offEvent<'module:announced'>>[1])
+      this.moduleAnnouncedHandler = null
+    }
+    this.moduleAnnouncedListeners.clear()
+    this.logger.log('LyraBridge destroyed')
+  }
+
+  sendNotify(headline: string, note?: string, urgency: 'immediate' | 'soon' | 'later' = 'soon'): void {
+    this.client.send({
+      type: 'spark:notify',
+      data: {
+        id: nanoid(),
+        eventId: nanoid(),
+        kind: 'ping',
+        urgency,
+        headline,
+        note,
+        destinations: ['proj-lyra:stage-*'],
+      },
+    } as Parameters<typeof this.client.send>[0])
+    this.logger.log('Sent spark:notify', { headline, urgency })
+  }
+
+  sendContextUpdate(text: string, hints?: string[], lane?: string): void
+  sendContextUpdate(update: ContextUpdate): void
+  sendContextUpdate(textOrUpdate: string | Omit<ContextUpdate, 'strategy' | 'id' | 'contextId'> & { contextId?: string }, hints?: string[], lane = 'game'): void {
+    const update = typeof textOrUpdate === 'string'
+      ? {
+        text: textOrUpdate,
+        hints,
+        lane,
+        strategy: ContextUpdateStrategy.AppendSelf,
+      } satisfies Omit<ContextUpdate, 'id' | 'contextId'> & { contextId?: string }
+      : {
+          strategy: ContextUpdateStrategy.AppendSelf,
+          ...textOrUpdate,
+        }
+
+    const contextId = update.contextId ?? nanoid()
+    this.client.send({
+      type: 'context:update',
+      data: {
+        id: nanoid(),
+        contextId,
+        lane: update.lane,
+        text: update.text,
+        hints: update.hints,
+        strategy: update.strategy,
+        destinations: update.destinations,
+      },
+    } as Parameters<typeof this.client.send>[0])
+    this.logger.log('Sent context:update', { lane: update.lane, preview: update.text.slice(0, 80), contextId })
+  }
+
+  sendEmit(eventId: string, state: 'queued' | 'working' | 'done' | 'dropped', note?: string): void {
+    this.client.send({
+      type: 'spark:emit',
+      data: {
+        id: nanoid(),
+        eventId,
+        state,
+        note,
+      },
+    } as Parameters<typeof this.client.send>[0])
+    this.logger.log('Sent spark:emit', { eventId, state })
+  }
+
+  /** Enables command delivery only while a Minecraft bot runtime can consume it. */
+  setCommandAvailable(available: boolean): void {
+    this.commandAvailable = available
+  }
+
+  onModuleAnnounced(listener: (event: ModuleAnnouncedEvent) => void) {
+    this.moduleAnnouncedListeners.add(listener)
+
+    return () => {
+      this.moduleAnnouncedListeners.delete(listener)
+    }
+  }
+
+  private handleActionIntent(cmd: SparkCommandData): void {
+    // A spark:command is high-level guidance from the LYRA server. Route it through the explicit
+    // `lyra_command` signal so the brain runs a fresh decision cycle
+    // (resetNoActionFollowupBudget('lyra_command'), normal Conscious wake-up) instead of silently
+    // filing it into history. The directive is attributed to the LYRA server as a neutral source,
+    // not to any specific in-game player. The status context tells Stage when this relay is available
+    // while this bridge remains the final receiver-side availability gate.
+    const firstOption = cmd.guidance?.options?.[0]
+    const label = firstOption?.label?.trim()
+    const steps = firstOption?.steps ?? []
+    // Prefer the short label (closest to the original instruction). Fall back to joined steps so the
+    // brain still has detail when label is missing.
+    const message = label && label.length > 0
+      ? label
+      : (steps.length > 0 ? steps.join(' / ') : `${cmd.intent} command received`)
+
+    const sourceId = 'lyra'
+
+    this.logger.log('Routing spark:command as an LYRA directive', {
+      commandId: cmd.commandId,
+      message,
+    })
+
+    this.eventBus.emit({
+      type: 'signal:lyra_command',
+      payload: Object.freeze({
+        type: 'lyra_command' as const,
+        description: `Directive from LYRA: "${message}"`,
+        sourceId,
+        confidence: 1.0,
+        timestamp: Date.now(),
+        metadata: {
+          message,
+          // Keep the spark provenance for debugging; the brain sees a typed LYRA directive.
+          sparkCommandId: cmd.commandId,
+          sparkIntent: cmd.intent,
+        },
+      }),
+      source: { component: 'lyra', id: 'bridge' },
+    })
+  }
+}

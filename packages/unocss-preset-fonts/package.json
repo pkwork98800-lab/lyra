@@ -1,0 +1,37 @@
+{
+  "name": "@proj-lyra/unocss-preset-fonts",
+  "type": "module",
+  "version": "0.14.1",
+  "description": "Fonts that are not included by Google Fonts, FontSource but open-source used by Project LYRA",
+  "author": {
+    "name": "Project LYRA Team",
+    "email": "lyra@lyra.local",
+    "url": "https://github.com/lyra-org"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/lyra-org/lyra",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lyra-org/lyra.git",
+    "directory": "packages/unocss-preset-fonts"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.mts",
+      "default": "./dist/index.mjs"
+    }
+  },
+  "scripts": {
+    "dev": "pnpm run build",
+    "build": "tsdown"
+  },
+  "peerDependencies": {
+    "@unocss/core": ">=66",
+    "@unocss/preset-web-fonts": ">=66"
+  },
+  "dependencies": {
+    "@proj-lyra/font-cjkfonts-allseto": "workspace:^",
+    "@proj-lyra/font-departure-mono": "workspace:^",
+    "@proj-lyra/font-xiaolai": "workspace:^"
+  }
+}

@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=LYRA
+Exec=lyra %U
+Terminal=false
+Type=Application
+Icon=ai.lyra.localri
+StartupWMClass=LYRA
+Comment=LYRA is an AI VTuber/Waifu chatbot supporting Live2D/VRM avatars, featuring human-like interactions and modular stage-based rendering.
+Categories=Utility;
+

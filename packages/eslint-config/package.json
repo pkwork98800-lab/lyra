@@ -1,0 +1,59 @@
+{
+  "name": "@proj-lyra/eslint-config",
+  "type": "module",
+  "version": "0.1.0-beta.19",
+  "description": "ESLint Configuration for LYRA.",
+  "author": "LYRA",
+  "license": "MIT",
+  "homepage": "https://std.lyra.local",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lyra-org/std.git",
+    "directory": "packages/eslint-config"
+  },
+  "bugs": "https://github.com/lyra-org/std/issues",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "bin": {
+    "lyra-lint": "./src/lyra-lint.js"
+  },
+  "files": [
+    "dist",
+    "src/lyra-lint.js"
+  ],
+  "scripts": {},
+  "peerDependencies": {
+    "@antfu/eslint-config": "^8.2.0",
+    "eslint": "^10.3.0",
+    "eslint-plugin-oxlint": "^1.62.0"
+  },
+  "peerDependenciesMeta": {
+    "eslint-plugin-oxlint": {
+      "optional": true
+    }
+  },
+  "dependencies": {
+    "@masknet/eslint-plugin": "^0.4.1",
+    "@proj-lyra/std": "workspace:^",
+    "eslint-flat-config-utils": "^3.2.0",
+    "eslint-plugin-de-morgan": "^2.1.1",
+    "eslint-plugin-depend": "^1.5.0",
+    "eslint-plugin-perfectionist": "^5.9.0",
+    "eslint-plugin-prefer-arrow": "^1.2.3",
+    "eslint-plugin-sonarjs": "^4.0.3",
+    "tinyexec": "^1.1.2"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^8.2.0",
+    "eslint": "^10.3.0",
+    "eslint-plugin-oxlint": "^1.62.0"
+  }
+}

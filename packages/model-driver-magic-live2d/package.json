@@ -1,0 +1,41 @@
+{
+  "name": "@proj-lyra/model-driver-magic-live2d",
+  "type": "module",
+  "version": "0.14.1",
+  "private": true,
+  "description": "Live2D model driver for MAGIC motion",
+  "author": {
+    "name": "Project LYRA Team",
+    "email": "lyra@lyra.local",
+    "url": "https://github.com/lyra-org"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lyra-org/lyra.git",
+    "directory": "packages/model-driver-magic-live2d"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "README.md",
+    "dist",
+    "package.json"
+  ],
+  "scripts": {
+    "build": "tsdown",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@proj-lyra/motion-driver-magic": "workspace:^",
+    "es-toolkit": "catalog:"
+  },
+  "devDependencies": {}
+}

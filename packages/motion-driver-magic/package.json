@@ -1,0 +1,40 @@
+{
+  "name": "@proj-lyra/motion-driver-magic",
+  "type": "module",
+  "version": "0.14.1",
+  "private": true,
+  "description": "Markovian Animation Generator with Illusory Conditioning for Project LYRA",
+  "author": {
+    "name": "Project LYRA Team",
+    "email": "lyra@lyra.local",
+    "url": "https://github.com/lyra-org"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lyra-org/lyra.git",
+    "directory": "packages/motion-driver-magic"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "README.md",
+    "dist",
+    "package.json"
+  ],
+  "scripts": {
+    "build": "tsdown",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "es-toolkit": "catalog:"
+  },
+  "devDependencies": {}
+}

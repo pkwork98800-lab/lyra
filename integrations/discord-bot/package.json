@@ -1,0 +1,40 @@
+{
+  "name": "@proj-lyra/discord-bot",
+  "type": "module",
+  "private": true,
+  "description": "Discord bot for LYRA",
+  "author": {
+    "name": "Project LYRA Team",
+    "email": "lyra@lyra.local",
+    "url": "https://github.com/lyra-org"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lyra-org/lyra.git",
+    "directory": "integrations/discord-bot"
+  },
+  "scripts": {
+    "start": "tsx --env-file=.env --env-file-if-exists=.env.local src/index.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@discordjs/voice": "catalog:",
+    "@guiiai/logg": "catalog:",
+    "@huggingface/transformers": "catalog:",
+    "@proj-lyra/audio": "workspace:^",
+    "@proj-lyra/server-sdk": "workspace:^",
+    "@proj-lyra/server-shared": "workspace:^",
+    "@snazzah/davey": "catalog:",
+    "@xsai-ext/providers": "catalog:",
+    "@xsai/generate-speech": "catalog:",
+    "@xsai/generate-text": "catalog:",
+    "@xsai/generate-transcription": "catalog:",
+    "@xsai/shared-chat": "catalog:",
+    "discord.js": "catalog:",
+    "libsodium-wrappers": "catalog:",
+    "opusscript": "catalog:",
+    "tsx": "catalog:",
+    "wavefile": "catalog:"
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "name": "@proj-lyra/agents",
+  "type": "module",
+  "version": "0.14.1",
+  "private": true,
+  "description": "Single-purpose model agents that LYRA runtimes and evals share",
+  "author": {
+    "name": "Project LYRA Team",
+    "email": "lyra@lyra.local",
+    "url": "https://github.com/lyra-org"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lyra-org/lyra.git",
+    "directory": "packages/agents"
+  },
+  "exports": {
+    ".": "./src/index.ts",
+    "./tool-card": "./src/tool-card/index.ts",
+    "./voice-end-judge": "./src/voice-end-judge/index.ts",
+    "./voice-transcription-rephrase": "./src/voice-transcription-rephrase/index.ts"
+  },
+  "scripts": {
+    "test:run": "vitest run --config vitest.config.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@proj-lyra/core-agent": "workspace:^",
+    "@proj-lyra/provider-inference": "workspace:^",
+    "valibot": "catalog:"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "vitest": "catalog:vitest"
+  }
+}

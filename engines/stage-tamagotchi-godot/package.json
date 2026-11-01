@@ -1,0 +1,25 @@
+{
+  "name": "@proj-lyra/stage-tamagotchi-godot",
+  "type": "module",
+  "version": "0.14.1",
+  "private": true,
+  "description": "Godot-native desktop stage runtime workspace engine for stage-tamagotchi",
+  "author": {
+    "name": "Project LYRA Team",
+    "email": "lyra@lyra.local",
+    "url": "https://github.com/lyra-org"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lyra-org/lyra.git",
+    "directory": "engines/stage-tamagotchi-godot"
+  },
+  "scripts": {
+    "build": "dotnet build ./stage-tamagotchi-godot.slnx",
+    "typecheck": "dotnet build ./stage-tamagotchi-godot.slnx",
+    "test": "dotnet run --project ./tests/stage-tamagotchi-godot.tests/stage-tamagotchi-godot.tests.csproj",
+    "dump:render-stages": "node ./tools/dumpRenderStages.mjs --dump-render-stages ./artifacts/render-stages",
+    "dump:render-stages:upper-body": "node ./tools/dumpRenderStages.mjs --dump-render-stages ./artifacts/render-stages-upper-body --view-preset upper-body"
+  }
+}

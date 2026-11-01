@@ -1,0 +1,46 @@
+{
+  "name": "@proj-lyra/three-mmd-physics-ammo",
+  "type": "module",
+  "version": "0.2.0-beta.2",
+  "description": "Use MMD on Three.js",
+  "author": "LYRA",
+  "license": "MIT",
+  "homepage": "https://github.com/lyra-org/three-mmd",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lyra-org/three-mmd.git",
+    "directory": "packages/three-mmd-physics-ammo"
+  },
+  "bugs": "https://github.com/lyra-org/three-mmd/issues",
+  "keywords": [
+    "threejs",
+    "three",
+    "mmd"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {},
+  "peerDependencies": {
+    "@proj-lyra/three-mmd": "workspace:^",
+    "@types/three": ">=0.184.0",
+    "three": ">=0.184.0"
+  },
+  "dependencies": {
+    "ammojs-typed": "^1.0.6"
+  },
+  "devDependencies": {
+    "@proj-lyra/three-mmd": "workspace:^",
+    "@types/three": "^0.185.1",
+    "three": "^0.185.1"
+  }
+}

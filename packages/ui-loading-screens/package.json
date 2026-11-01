@@ -1,0 +1,49 @@
+{
+  "name": "@proj-lyra/ui-loading-screens",
+  "type": "module",
+  "private": true,
+  "description": "A collection of loading screens that used by Project LYRA",
+  "author": {
+    "name": "Project LYRA Team",
+    "email": "lyra@lyra.local",
+    "url": "https://github.com/lyra-org"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lyra-org/lyra.git",
+    "directory": "packages/ui-loading-screens"
+  },
+  "exports": {
+    ".": "./src/index.ts",
+    "./components": "./src/components/index.ts",
+    "./startup-screen": "./src/components/startup-screen.vue",
+    "./*": "./*"
+  },
+  "scripts": {
+    "play:dev": "vite",
+    "play:build": "vite build",
+    "play:preview": "vite preview",
+    "build": "echo \"No build step required\"",
+    "typecheck": "vue-tsc --noEmit"
+  },
+  "dependencies": {
+    "@fontsource-variable/comfortaa": "catalog:",
+    "@proj-lyra/font-departure-mono": "workspace:^",
+    "@proj-lyra/std": "catalog:",
+    "@proj-lyra/ui": "workspace:^",
+    "@rive-app/canvas-lite": "catalog:",
+    "@vueuse/core": "catalog:",
+    "@vueuse/motion": "catalog:",
+    "vaul-vue": "catalog:",
+    "vue": "catalog:"
+  },
+  "devDependencies": {
+    "@unocss/reset": "catalog:",
+    "@vitejs/plugin-vue": "catalog:",
+    "vite": "catalog:",
+    "vite-plugin-vue-devtools": "catalog:",
+    "vue-router": "catalog:",
+    "vue-tsc": "catalog:"
+  }
+}

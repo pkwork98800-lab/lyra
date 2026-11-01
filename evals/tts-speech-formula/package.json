@@ -1,0 +1,59 @@
+{
+  "name": "@proj-lyra/evals-tts-speech-formula",
+  "type": "module",
+  "private": true,
+  "description": "Vieval suite for how well listeners understand formulas that LYRA reads aloud",
+  "author": {
+    "name": "Project LYRA Team",
+    "email": "lyra@lyra.local",
+    "url": "https://github.com/lyra-org"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lyra-org/lyra.git",
+    "directory": "evals/tts-speech-formula"
+  },
+  "exports": {
+    ".": "./eval/index.ts",
+    "./config": "./eval/tasks/read-aloud/config.ts",
+    "./gemini-transcription": "./eval/evaluators/speech/gemini-transcription.ts",
+    "./speech-models": "./eval/evaluators/speech/speech-models.ts"
+  },
+  "scripts": {
+    "test:run": "vitest run --config vitest.config.ts",
+    "eval:compare": "pnpm -F @proj-lyra/core-agent build && vieval run --config ./vieval.config.ts --with-viewer",
+    "typecheck": "tsc --noEmit",
+    "cases:math-bridge": "tsx eval/cases/math-bridge/fetch.ts",
+    "judge:collect": "tsx eval/evaluators/judge/calibration/collect.ts"
+  },
+  "dependencies": {
+    "@cortex-js/compute-engine": "catalog:",
+    "@duckdb/duckdb-wasm": "catalog:",
+    "@proj-lyra/core-agent": "workspace:^",
+    "@proj-lyra/drizzle-duckdb-wasm": "catalog:",
+    "@proj-lyra/mathjson": "workspace:^",
+    "@proj-lyra/speech-transformer-math": "workspace:^",
+    "@proj-lyra/std": "catalog:",
+    "@velin-dev/core-vue": "catalog:",
+    "@vieval/ui": "catalog:",
+    "@xsai-apple-speech/transcription-native": "catalog:",
+    "@xsai/generate-speech": "catalog:",
+    "@xsai/generate-text": "catalog:",
+    "@xsai/generate-transcription": "catalog:",
+    "drizzle-orm": "catalog:",
+    "katex": "catalog:",
+    "speech-rule-engine": "catalog:",
+    "valibot": "catalog:",
+    "web-worker": "catalog:"
+  },
+  "optionalDependencies": {
+    "@xsai-apple-speech/transcription-native-darwin-arm64": "catalog:",
+    "@xsai-apple-speech/transcription-native-darwin-x64": "catalog:"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "vieval": "catalog:",
+    "vitest": "catalog:vitest"
+  }
+}

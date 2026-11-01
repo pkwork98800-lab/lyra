@@ -1,0 +1,41 @@
+{
+  "name": "@proj-lyra/ui-timeline",
+  "type": "module",
+  "private": true,
+  "description": "Timeline UI for Vue: headless parts for view, zoom, cursor, and keyboard, and the LYRA-styled timeline",
+  "author": {
+    "name": "Project LYRA Team",
+    "email": "lyra@lyra.local",
+    "url": "https://github.com/lyra-org"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lyra-org/lyra.git",
+    "directory": "packages/ui-timeline"
+  },
+  "exports": {
+    ".": "./src/index.ts",
+    "./headless": "./src/headless/index.ts"
+  },
+  "scripts": {
+    "test:run": "vitest run",
+    "typecheck": "vue-tsc --noEmit"
+  },
+  "dependencies": {
+    "@proj-lyra/timeline-canvas": "workspace:^",
+    "@proj-lyra/ui": "workspace:^",
+    "@vueuse/core": "catalog:",
+    "reka-ui": "catalog:",
+    "vue": "catalog:"
+  },
+  "devDependencies": {
+    "@histoire/plugin-vue": "catalog:",
+    "@vitejs/plugin-vue": "catalog:",
+    "@vitest/browser-playwright": "catalog:vitest",
+    "unocss": "catalog:",
+    "vitest": "catalog:vitest",
+    "vitest-browser-vue": "catalog:",
+    "vue-tsc": "catalog:"
+  }
+}

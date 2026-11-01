@@ -1,0 +1,4 @@
+interface:
+  display_name: "Use Agent Browser for LYRA"
+  short_description: "Test LYRA model imports across desktop, web, and mobile"
+  default_prompt: "Use $use-agent-browser-for-lyra to upload and verify a local display model in LYRA."

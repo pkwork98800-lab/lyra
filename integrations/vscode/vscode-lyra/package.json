@@ -1,0 +1,81 @@
+{
+  "publisher": "proj-lyra",
+  "name": "vscode-lyra",
+  "displayName": "LYRA VSCode adapter",
+  "type": "module",
+  "version": "0.14.1",
+  "private": true,
+  "description": "Adapter that connects VSCode into Project LYRA",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lyra-org/lyra.git",
+    "directory": "integrations/vscode/vscode-lyra"
+  },
+  "categories": [
+    "Other"
+  ],
+  "preview": true,
+  "main": "./dist/extension.cjs",
+  "icon": "res/logo.jpg",
+  "engines": {
+    "vscode": "^1.116.0"
+  },
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "lyra-vscode.enable",
+        "title": "LYRA: Enable"
+      },
+      {
+        "command": "lyra-vscode.disable",
+        "title": "LYRA: Disable"
+      },
+      {
+        "command": "lyra-vscode.status",
+        "title": "LYRA: Show Status"
+      }
+    ],
+    "configuration": {
+      "title": "LYRA",
+      "properties": {
+        "lyra-vscode.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable or disable the LYRA extension"
+        },
+        "lyra-vscode.contextLines": {
+          "type": "number",
+          "default": 5,
+          "description": "Number of context lines to send (before and after current line)"
+        },
+        "lyra-vscode.sendInterval": {
+          "type": "number",
+          "default": 3000,
+          "description": "Interval in milliseconds to send updates (0 for real-time)"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "prepare": "pnpm run update",
+    "update": "tsx ./scripts/vscode-ext-gen.ts",
+    "dev": "tsdown --watch",
+    "build": "tsdown",
+    "publish": "tsx ./scripts/publish.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@guiiai/logg": "catalog:",
+    "@proj-lyra/server-sdk": "workspace:*",
+    "@proj-lyra/std": "catalog:",
+    "@types/vscode": "catalog:",
+    "es-toolkit": "catalog:",
+    "injeca": "catalog:",
+    "nanoid": "catalog:",
+    "tinyexec": "catalog:",
+    "vscode-ext-gen": "catalog:"
+  }
+}

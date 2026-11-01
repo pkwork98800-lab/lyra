@@ -1,0 +1,48 @@
+{
+  "name": "@proj-lyra/cap-vite",
+  "type": "module",
+  "version": "0.14.1",
+  "description": "CLI that starts a Vite dev server and runs Capacitor live reload",
+  "author": {
+    "name": "Project LYRA Team",
+    "email": "lyra@lyra.local",
+    "url": "https://github.com/lyra-org"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lyra-org/lyra.git",
+    "directory": "packages/cap-vite"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.mts",
+      "default": "./dist/index.mjs"
+    }
+  },
+  "main": "./dist/index.mjs",
+  "types": "./dist/index.d.mts",
+  "bin": {
+    "cap-vite": "./dist/bin/run.mjs"
+  },
+  "files": [
+    "README.md",
+    "dist",
+    "package.json"
+  ],
+  "scripts": {
+    "test:run": "vitest run --config vitest.config.ts",
+    "build": "tsdown",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "@capacitor/cli": "^8.0.0",
+    "vite": "^7.0.0 || ^8.0.0-beta.0"
+  },
+  "dependencies": {
+    "@proj-lyra/std": "catalog:",
+    "cac": "catalog:",
+    "tinyexec": "catalog:"
+  }
+}

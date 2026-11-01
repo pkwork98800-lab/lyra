@@ -1,0 +1,41 @@
+{
+  "name": "@proj-lyra/core-character",
+  "type": "module",
+  "version": "0.14.1",
+  "private": true,
+  "description": "Core character contracts and runtime orchestration for LYRA",
+  "author": {
+    "name": "Project LYRA Team",
+    "email": "lyra@lyra.local",
+    "url": "https://github.com/lyra-org"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lyra-org/lyra.git",
+    "directory": "packages/core-character"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.mts",
+      "default": "./dist/index.mjs"
+    }
+  },
+  "main": "./dist/index.mjs",
+  "types": "./dist/index.d.mts",
+  "files": [
+    "README.md",
+    "dist",
+    "package.json"
+  ],
+  "scripts": {
+    "build": "tsdown",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@proj-lyra/std": "catalog:",
+    "@proj-lyra/stream-kit": "workspace:^",
+    "clustr": "catalog:"
+  },
+  "devDependencies": {}
+}

@@ -1,0 +1,46 @@
+{
+  "name": "@proj-lyra/scenarios-stage-tamagotchi-browser",
+  "type": "module",
+  "version": "0.14.1",
+  "private": true,
+  "description": "Vite/Vue scene app for stage tamagotchi browser captures",
+  "author": {
+    "name": "Project LYRA Team",
+    "email": "lyra@lyra.local",
+    "url": "https://github.com/lyra-org"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lyra-org/lyra.git",
+    "directory": "packages/scenarios-stage-tamagotchi-browser"
+  },
+  "scripts": {
+    "test:run": "vitest run --config vitest.config.ts",
+    "capture": "tsx scripts/capture.ts",
+    "scenario:build": "vite build",
+    "scenario:dev": "vite",
+    "typecheck": "vue-tsc --noEmit"
+  },
+  "dependencies": {
+    "@napi-rs/image": "catalog:",
+    "@proj-lyra/std": "catalog:",
+    "@vishot/mockup-desktop-vue": "catalog:",
+    "@vishot/renderer-browser": "catalog:",
+    "@vueuse/core": "catalog:",
+    "date-fns": "catalog:",
+    "reka-ui": "catalog:",
+    "vue": "catalog:",
+    "vue-router": "catalog:"
+  },
+  "devDependencies": {
+    "@iconify-json/line-md": "catalog:",
+    "@iconify-json/material-symbols": "catalog:",
+    "@iconify-json/mdi": "catalog:",
+    "@iconify-json/ph": "catalog:",
+    "@unocss/reset": "catalog:",
+    "@vitejs/plugin-vue": "catalog:",
+    "unplugin-vue-router": "catalog:",
+    "vue-tsc": "catalog:"
+  }
+}

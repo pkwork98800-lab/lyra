@@ -1,0 +1,35 @@
+{
+  "name": "@proj-lyra/chromatic",
+  "type": "module",
+  "version": "2.0.1",
+  "description": "Readability enhanced, clean, nice looking colors palette we used across our Project LYRA https://github.com/lyra-org/lyra projects!",
+  "author": {
+    "name": "Project LYRA Team",
+    "email": "lyra@lyra.local",
+    "url": "https://github.com/proj-lyra"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/proj-lyra/chromatic.git",
+    "directory": "packages/chromatic"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.mts",
+      "default": "./dist/index.mjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "main": "./dist/index.mjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.mts",
+  "scripts": {},
+  "dependencies": {
+    "culori": "^4.0.2"
+  },
+  "devDependencies": {
+    "@types/culori": "^4.0.1",
+    "@unocss/core": "^66.7.5"
+  }
+}

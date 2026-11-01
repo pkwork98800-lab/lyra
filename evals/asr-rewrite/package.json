@@ -1,0 +1,30 @@
+{
+  "name": "@proj-lyra/evals-asr-rewrite",
+  "type": "module",
+  "private": true,
+  "description": "Vieval suite for the rewrite of speech recognition text",
+  "author": {
+    "name": "Project LYRA Team",
+    "email": "lyra@lyra.local",
+    "url": "https://github.com/lyra-org"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lyra-org/lyra.git",
+    "directory": "evals/asr-rewrite"
+  },
+  "scripts": {
+    "eval:run": "vieval run --config ./vieval.config.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@proj-lyra/agents": "workspace:^",
+    "@proj-lyra/provider-inference": "workspace:^",
+    "valibot": "catalog:"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "vieval": "catalog:"
+  }
+}

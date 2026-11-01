@@ -1,0 +1,24 @@
+{
+  "manifestVersion": 2,
+  "kind": "manifest.extension.lyra.local",
+  "id": "activation-planner-consumer",
+  "version": "1.0.0",
+  "engines": {
+    "lyra": "*",
+    "runtimes": [
+      "electron"
+    ]
+  },
+  "entrypoints": {
+    "electron": "./activation-planner-consumer.mjs"
+  },
+  "permissions": {},
+  "kits": {
+    "uses": [
+      {
+        "id": "dev.lyra.example-activation",
+        "version": "^1.0.0"
+      }
+    ]
+  }
+}

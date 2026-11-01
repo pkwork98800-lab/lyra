@@ -1,0 +1,31 @@
+{
+  "name": "@proj-lyra/memory-pgvector",
+  "type": "module",
+  "version": "0.14.1",
+  "private": true,
+  "description": "",
+  "author": {
+    "name": "Project LYRA Team",
+    "email": "lyra@lyra.local",
+    "url": "https://github.com/lyra-org"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lyra-org/lyra.git",
+    "directory": "packages/memory-pgvector"
+  },
+  "keywords": [],
+  "scripts": {
+    "dev": "tsx src/index.ts"
+  },
+  "dependencies": {
+    "@guiiai/logg": "catalog:",
+    "@proj-lyra/server-sdk": "workspace:^",
+    "drizzle-orm": "catalog:",
+    "postgres": "catalog:"
+  },
+  "devDependencies": {
+    "tsx": "catalog:"
+  }
+}

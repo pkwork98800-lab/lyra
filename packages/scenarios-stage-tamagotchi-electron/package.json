@@ -1,0 +1,23 @@
+{
+  "name": "@proj-lyra/scenarios-stage-tamagotchi-electron",
+  "type": "module",
+  "version": "0.14.1",
+  "private": true,
+  "description": "Product-owned Electron scenarios for stage-tamagotchi raw screenshot capture",
+  "author": {
+    "name": "Project LYRA Team",
+    "email": "lyra@lyra.local",
+    "url": "https://github.com/lyra-org"
+  },
+  "license": "MIT",
+  "exports": "./src/index.ts",
+  "scripts": {
+    "test:run": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@proj-lyra/std": "catalog:",
+    "@vishot/source-electron": "catalog:",
+    "playwright": "catalog:"
+  }
+}

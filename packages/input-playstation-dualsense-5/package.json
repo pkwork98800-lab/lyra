@@ -1,0 +1,41 @@
+{
+  "name": "@proj-lyra/input-playstation-dualsense-5",
+  "type": "module",
+  "version": "0.14.1",
+  "private": true,
+  "description": "WebHID input and output support for the PlayStation 5 DualSense controller",
+  "author": {
+    "name": "Project LYRA Team",
+    "email": "lyra@lyra.local",
+    "url": "https://github.com/lyra-org"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lyra-org/lyra.git",
+    "directory": "packages/input-playstation-dualsense-5"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "README.md",
+    "dist",
+    "package.json"
+  ],
+  "scripts": {
+    "test:run": "vitest run --config vitest.config.ts",
+    "build": "tsdown",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@types/w3c-web-hid": "catalog:"
+  },
+  "devDependencies": {}
+}

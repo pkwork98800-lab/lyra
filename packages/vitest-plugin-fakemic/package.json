@@ -1,0 +1,27 @@
+{
+  "name": "@proj-lyra/vitest-plugin-fakemic",
+  "type": "module",
+  "version": "0.14.1",
+  "private": true,
+  "description": "Fake microphone test runtime and Vitest integration",
+  "author": {
+    "name": "Project LYRA Team",
+    "email": "lyra@lyra.local",
+    "url": "https://github.com/lyra-org"
+  },
+  "license": "MIT",
+  "exports": "./src/index.ts",
+  "scripts": {
+    "test:run": "vitest run --config vitest.config.ts",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "playwright": "catalog:",
+    "vite": "catalog:",
+    "vitest": "catalog:vitest"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:"
+  }
+}

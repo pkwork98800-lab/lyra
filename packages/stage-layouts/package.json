@@ -1,0 +1,72 @@
+{
+  "name": "@proj-lyra/stage-layouts",
+  "type": "module",
+  "private": true,
+  "description": "Shared Layouts",
+  "author": {
+    "name": "Project LYRA Team",
+    "email": "lyra@lyra.local",
+    "url": "https://github.com/lyra-org"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lyra-org/lyra.git",
+    "directory": "packages/stage-layouts"
+  },
+  "exports": {
+    ".": "./src/index.ts",
+    "./browser/adaptive-input": "./src/browser/adaptive-input.ts",
+    "./layouts/*": "./src/layouts/*.vue",
+    "./components/AdaptiveInput": "./src/components/AdaptiveInput/index.ts",
+    "./components/Layouts/*": "./src/components/Layouts/*.vue",
+    "./components/Layouts/InteractiveArea/Actions/*": "./src/components/Layouts/InteractiveArea/Actions/*.vue",
+    "./components/Layouts/ViewControls/*": "./src/components/Layouts/ViewControls/*.vue",
+    "./components/Widgets/*": "./src/components/Widgets/*.vue",
+    "./components/Backgrounds/*": "./src/components/Backgrounds/*",
+    "./composables/*": "./src/composables/*.ts",
+    "./stores/*": "./src/stores/*.ts"
+  },
+  "scripts": {
+    "typecheck": "vue-tsc --noEmit"
+  },
+  "dependencies": {
+    "@proj-lyra/ccc": "workspace:*",
+    "@proj-lyra/eventa": "catalog:",
+    "@proj-lyra/i18n": "workspace:*",
+    "@proj-lyra/server-sdk": "workspace:*",
+    "@proj-lyra/stage-ui": "workspace:*",
+    "@proj-lyra/stage-ui-three": "workspace:*",
+    "@proj-lyra/std": "catalog:",
+    "@proj-lyra/ui": "workspace:*",
+    "@vueuse/core": "catalog:",
+    "@vueuse/shared": "catalog:",
+    "@xsai-ext/providers": "catalog:",
+    "@xsai/generate-speech": "catalog:",
+    "@xsai/stream-transcription": "catalog:",
+    "animejs": "catalog:",
+    "colorjs.io": "catalog:",
+    "dompurify": "catalog:",
+    "localforage": "catalog:",
+    "nanoid": "catalog:",
+    "node-vibrant": "catalog:",
+    "pinia": "catalog:",
+    "reka-ui": "catalog:",
+    "unspeech": "catalog:xsai",
+    "vue": "catalog:",
+    "vue-i18n": "catalog:",
+    "vue-router": "catalog:",
+    "vue-sonner": "catalog:"
+  },
+  "devDependencies": {
+    "@nekopaw/tempora": "catalog:",
+    "@proj-lyra/stage-shared": "workspace:^",
+    "@types/audioworklet": "catalog:",
+    "@types/three": "catalog:",
+    "@vue/test-utils": "catalog:",
+    "jsdom": "catalog:",
+    "unplugin-info": "catalog:",
+    "vitest": "catalog:vitest",
+    "vue-tsc": "catalog:"
+  }
+}
