@@ -5,10 +5,10 @@ import { env } from 'node:process'
 import { activeBundle } from '@ergosphere-it/electron/main'
 import { defineInvokeHandler } from '@proj-lyra/eventa'
 import { createContext } from '@proj-lyra/eventa/adapters/electron/main'
-import { app, ipcMain, shell } from 'electron'
+import { app, dialog, ipcMain, shell } from 'electron'
 import { isLinux, isMacOS, isWindows } from 'std-env'
 
-import { electron, electronAppGetVersion, electronAppIsWayland, electronAppOpenUserDataFolder, electronAppQuit } from '../../../shared/eventa'
+import { electron, electronAppGetVersion, electronAppIsWayland, electronAppOpenUserDataFolder, electronAppPickFolder, electronAppQuit } from '../../../shared/eventa'
 import { resolveIsWayland } from '../../app/ozone'
 
 export function createAppService(params: { context: ReturnType<typeof createContext>['context'], window: BrowserWindow }) {
@@ -27,6 +27,16 @@ export function createAppService(params: { context: ReturnType<typeof createCont
       throw new Error(openResult)
     }
     return { path }
+  })
+  defineInvokeHandler(params.context, electronAppPickFolder, async () => {
+    const result = await dialog.showOpenDialog(params.window, {
+      properties: ['openDirectory', 'createDirectory'],
+      title: 'Choose folder for LYRA memory storage',
+    })
+    if (result.canceled || result.filePaths.length === 0) {
+      return { path: '' }
+    }
+    return { path: result.filePaths[0] }
   })
   defineInvokeHandler(params.context, electronAppQuit, () => app.quit())
 }

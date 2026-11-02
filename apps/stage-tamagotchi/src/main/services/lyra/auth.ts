@@ -34,6 +34,7 @@ const OIDC_SCOPES = 'openid profile email offline_access'
 const SERVER_URL = import.meta.env.VITE_SERVER_URL || 'https://api.lyra.build'
 const OIDC_AUTHORIZE_PATH = '/api/auth/oauth2/authorize'
 const OIDC_TOKEN_PATH = '/api/auth/oauth2/token'
+const OIDC_WELL_KNOWN_PATH = '/.well-known/openid-configuration'
 
 // One main-process attempt owns the callback across all renderer windows.
 // Replacement, logout, and owner closure invalidate it before cleanup. Async
@@ -48,6 +49,25 @@ interface LoginAttempt {
 let activeAttempt: LoginAttempt | undefined
 const authContexts = new Set<MainContext>()
 let authStatus: ElectronAuthStatus | undefined
+
+async function checkAuthServerReachable(): Promise<{ reachable: boolean, error?: string }> {
+  try {
+    const controller = new AbortController()
+    const timeout = setTimeout(() => controller.abort(), 5000)
+    const response = await fetch(`${SERVER_URL}${OIDC_WELL_KNOWN_PATH}`, {
+      method: 'GET',
+      signal: controller.signal,
+    })
+    clearTimeout(timeout)
+    if (!response.ok) {
+      return { reachable: false, error: `Auth server returned ${response.status}` }
+    }
+    return { reachable: true }
+  }
+  catch (error) {
+    return { reachable: false, error: errorMessageFrom(error) ?? 'Cannot reach auth server' }
+  }
+}
 let feedbackExpiresAt = 0
 
 function publishAuthStatus(status: ElectronAuthStatus) {
@@ -104,6 +124,17 @@ export function createAuthService(params: {
   })
   defineInvokeHandler(params.context, electronAuthStartLogin, async (_, options) => {
     if (params.window.webContents.id !== options?.raw.ipcMainEvent.sender.id) {
+      return
+    }
+
+    // Check if auth server is reachable before starting sign-in
+    const serverCheck = await checkAuthServerReachable()
+    if (!serverCheck.reachable) {
+      publishAuthStatus({
+        attemptId: '',
+        state: 'error',
+        error: `Cannot reach auth server at ${SERVER_URL}. ${serverCheck.error}. For local development, run 'cd server && docker-compose up -d' or set VITE_SERVER_URL to your local auth server.`,
+      })
       return
     }
 

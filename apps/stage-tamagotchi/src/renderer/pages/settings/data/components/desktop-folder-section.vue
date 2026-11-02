@@ -8,7 +8,7 @@ import { isElectronWindow } from '@proj-lyra/stage-shared'
 import { Button } from '@proj-lyra/ui'
 import { useI18n } from 'vue-i18n'
 
-import { electronAppOpenUserDataFolder } from '../../../../../shared/eventa'
+import { electronAppOpenUserDataFolder, electronAppPickFolder } from '../../../../../shared/eventa'
 
 const emit = defineEmits<DataSettingsStatusEmits>()
 const { t } = useI18n()
@@ -23,6 +23,27 @@ async function triggerOpenDesktopUserDataFolder() {
     const openUserDataFolder = defineInvoke(context, electronAppOpenUserDataFolder)
 
     await openUserDataFolder()
+  }
+  catch (error) {
+    handleActionError(error)
+  }
+}
+
+async function triggerPickMemoryFolder() {
+  if (typeof window === 'undefined' || !isElectronWindow(window))
+    return
+
+  try {
+    const { context } = createContext(window.electron.ipcRenderer)
+    const pickFolder = defineInvoke(context, electronAppPickFolder)
+
+    const result = await pickFolder()
+    if (result.path) {
+      // TODO: Save the chosen folder path to settings
+      // For now just show it
+      // eslint-disable-next-line no-alert
+      window.alert(`Selected folder: ${result.path}`)
+    }
   }
   catch (error) {
     handleActionError(error)
@@ -44,6 +65,9 @@ async function triggerOpenDesktopUserDataFolder() {
       <div :class="['flex flex-col items-start gap-2']">
         <Button @click="triggerOpenDesktopUserDataFolder">
           {{ t('settings.pages.data.sections.desktop-folder.open') }}
+        </Button>
+        <Button variant="secondary" @click="triggerPickMemoryFolder">
+          {{ t('settings.pages.data.sections.desktop-folder.choose') }}
         </Button>
       </div>
     </div>
