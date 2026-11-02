@@ -2283,6 +2283,9 @@ pages:
           field:
             api-key:
               placeholder: tgp_v1_...
+      google:
+        description: Google Gemini API
+        title: Google (Gemini)
       google-generative-ai:
         description: gemini.google.com
         title: Google Gemini
