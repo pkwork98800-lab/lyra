@@ -7,6 +7,7 @@ import { watch } from 'vue'
 import { defaultLive2DMotionMagicProfileId, live2dMotionMagicProfiles } from './profiles'
 
 const profileId = useLocalStorageManualReset('settings/live2d/magic/profile', defaultLive2DMotionMagicProfileId)
+const shuffleProfiles = useLocalStorageManualReset('settings/live2d/magic/shuffle-profiles', false)
 const skipMouthOpen = useLocalStorageManualReset('settings/live2d/magic/skip-mouth-open', true)
 const forceViewTarget = useLocalStorageManualReset('settings/live2d/magic/force-view-target', true)
 
@@ -25,12 +26,14 @@ watch(profileId, (value) => {
 export const useLive2DMotionMagicSettings = defineStore('settings-live2d-motion-magic', () => {
   function resetState() {
     profileId.reset()
+    shuffleProfiles.reset()
     skipMouthOpen.reset()
     forceViewTarget.reset()
   }
 
   return {
     profileId,
+    shuffleProfiles,
     skipMouthOpen,
     forceViewTarget,
     resetState,

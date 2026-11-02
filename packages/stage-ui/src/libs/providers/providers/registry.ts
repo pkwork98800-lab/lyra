@@ -6,6 +6,7 @@ import type { ProviderConfigContext, ProviderDefinition } from '../types'
 import type { providerAliyunNlsTranscription } from './aliyun-nls'
 import type { providerAppleSpeechTranscription } from './apple-speech'
 import type { providerAppleVision } from './apple-vision'
+import type { providerGoogle } from './google'
 import type { providerKokoroLocal } from './kokoro-local'
 import type {
   providerAppLocalAudioSpeech,
@@ -21,6 +22,7 @@ import type {
   providerOfficialTranscription,
 } from './official'
 import type { providerSherpawTranscription } from './sherpaw'
+import type { providerTogether } from './together'
 
 import { orderBy } from 'es-toolkit'
 
@@ -37,6 +39,8 @@ type StageOnlyProviderId
     | typeof providerBrowserLocalAudioTranscription.id
     | typeof providerKokoroLocal.id
     | typeof providerNvidia.id
+    | typeof providerGoogle.id
+    | typeof providerTogether.id
     | typeof providerOfficialChat.id
     | typeof providerOfficialSpeech.id
     | typeof providerOfficialSpeechStreaming.id

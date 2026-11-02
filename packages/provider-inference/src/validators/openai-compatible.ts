@@ -68,6 +68,9 @@ function shouldSkipModelId(modelId: string): boolean {
     'embed',
     'tts',
     'models/gemini-2.5-pro',
+    'gemini-2.5-flash',
+    'gemini-2.5-flash-lite',
+    'gemini-2.5-pro',
   ].some(fragment => modelId.includes(fragment))
 }
 
@@ -97,7 +100,8 @@ async function pickValidationModel<TConfig extends { apiKey?: string | null, bas
   try {
     const models = await resolveModels(config, provider, providerExtra)
     const modelId = extractModelId(models.find(model => !shouldSkipModelId(extractModelId(model))))
-    return modelId || null
+    // Allow provider to normalize model ID (e.g. map deprecated models to current ones)
+    return modelId ? (providerExtra?.normalizeModelId?.(modelId) ?? modelId) : null
   }
   catch {
     return null

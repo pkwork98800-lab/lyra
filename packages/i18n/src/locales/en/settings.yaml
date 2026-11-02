@@ -228,6 +228,21 @@ live2d:
             speaking-excited:
               title: Speaking / excited
               description: Use the bundled speaking and excited motion recording.
+            walking:
+              title: Walking
+              description: Use the bundled walking motion recording with natural body sway.
+            gestures:
+              title: Gestures
+              description: Use the bundled gestures recording (waving, heart, looking, smiling).
+            looking-around:
+              title: Looking Around
+              description: Use the bundled looking around recording with natural head/eye movement.
+            sleeping:
+              title: Sleeping
+              description: Use the bundled sleeping recording with natural breathing and eye closure.
+        shuffle-profiles:
+          title: Shuffle profiles
+          description: Automatically cycle through all profiles every 30 seconds.
         skip-mouth-open:
           title: Skip generated mouth opening
           description: Keep speech lip sync in control. Disable this option to use mouth opening from the profile.
@@ -637,6 +652,7 @@ pages:
         title: Open app data folder
         description: Open LYRA's data folder in your file manager.
         open: Open folder
+        choose: Choose memory folder
       desktop:
         title: Reset desktop settings & states
         description: Clear LYRA desktop settings and runtime state.
@@ -1906,22 +1922,17 @@ pages:
             description: AWS region where Bedrock is enabled (e.g. us-east-1, us-west-2)
       anthropic:
         description: anthropic.com
-        title: Anthropic {'|'} Claude
+        title: Anthropic (Claude)
         helpinfo:
           title: Before you start
-          description:
-            part1: >-
-              While Anthropic recently did announce that they are having a beta
-              support for OpenAI SDK compatibility
-            part2: (you can read more here)
-            part3: but due to the implementation details comes with
-            part4: >-
-              restrictions which not aligned with the OpenAI SDK, it's currently
-              not possible to use this provider in the browser.
-            part5: >-
-              If you do need to use this provider, you will need a dedicated
-              proxy backend like a Serverless Function running on
-            part6: or some CORS bypassing services to bypass the CORS restrictions.
+          description: >-
+            Get your API key from <a href="https://console.anthropic.com/" target="_blank"
+            rel="noopener noreferrer">Anthropic Console</a>. Supports Claude 3.5
+            Sonnet, Haiku, Opus, and other models.
+        fields:
+          field:
+            api-key:
+              placeholder: sk-ant-...
       cloudflare-workers-ai:
         description: cloudflare.com
         fields:
@@ -2205,6 +2216,20 @@ pages:
       openai:
         description: openai.com
         title: OpenAI
+        helpinfo:
+          title: Before you start
+          description: >-
+            Get your API key from <a href="https://platform.openai.com/api-keys" target="_blank"
+            rel="noopener noreferrer">OpenAI Platform</a>. Supports GPT-4o, GPT-4o Mini,
+            o1, and other models.
+        fields:
+          field:
+            api-key:
+              placeholder: sk-...
+            organization:
+              label: Organization ID
+              description: Optional OpenAI organization ID
+              placeholder: org-...
       azure-openai:
         description: Azure OpenAI API
         title: Azure OpenAI
@@ -2214,6 +2239,16 @@ pages:
       nvidia:
         description: build.nvidia.com
         title: NVIDIA NIM
+        helpinfo:
+          title: Before you start
+          description: >-
+            Get your API key from <a href="https://build.nvidia.com/" target="_blank"
+            rel="noopener noreferrer">NVIDIA Build</a>. NVIDIA NIM provides accelerated
+            inference for popular open models.
+        fields:
+          field:
+            api-key:
+              placeholder: nvapi-...
       n1n:
         description: n1n.ai - High-performance AI API provider.
         title: n1n
@@ -2237,13 +2272,43 @@ pages:
         title: Player2
       together:
         description: together.ai
-        title: Together.ai
+        title: Together AI
+        helpinfo:
+          title: Before you start
+          description: >-
+            Get your API key from <a href="https://api.together.xyz/settings/api-keys" target="_blank"
+            rel="noopener noreferrer">Together AI</a>. Access open-source models
+            like Llama 3.1 405B, Qwen 2.5, Mixtral, Gemma 2 at scale.
+        fields:
+          field:
+            api-key:
+              placeholder: tgp_v1_...
       google-generative-ai:
         description: gemini.google.com
         title: Google Gemini
+        helpinfo:
+          title: Before you start
+          description: >-
+            Get your API key from <a href="https://aistudio.google.com/apikey" target="_blank"
+            rel="noopener noreferrer">Google AI Studio</a>. Supports Gemini models
+            including 2.0 Flash, 1.5 Pro, and 1.5 Flash.
+        fields:
+          field:
+            api-key:
+              placeholder: AIza...
       groq:
         description: groq.com
         title: Groq
+        helpinfo:
+          title: Before you start
+          description: >-
+            Get your API key from <a href="https://console.groq.com/keys" target="_blank"
+            rel="noopener noreferrer">Groq Console</a>. Groq provides ultra-fast
+            inference for open models like Llama 3.3, Mixtral, Gemma 2.
+        fields:
+          field:
+            api-key:
+              placeholder: gsk_...
       featherless:
         description: featherless.ai
         title: Featherless AI

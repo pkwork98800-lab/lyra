@@ -158,6 +158,11 @@ export interface ProviderExtraMethods<TConfig> {
   listModelCatalog?: (config: TConfig, provider: ProviderInstance, contextOptions?: ProviderContext) => Promise<ProviderModelCatalog>
   listModels?: (config: TConfig, provider: ProviderInstance, contextOptions?: ProviderContext) => Promise<ModelInfo[]>
   /**
+   * Normalizes a model ID for validation. Useful for mapping deprecated model IDs
+   * to their current equivalents before the chat completions check runs.
+   */
+  normalizeModelId?: (modelId: string) => string
+  /**
    * Selects serializable configuration fields used by voice discovery. The cache
    * fingerprints these fields separately from model and authentication ownership.
    * Omit synthesis-only controls. Without a selector, all config fields invalidate the cache.

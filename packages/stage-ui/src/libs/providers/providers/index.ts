@@ -5,12 +5,14 @@ import { registerProviders } from './registry'
 import './aliyun-nls'
 import './apple-speech'
 import './apple-vision'
-import './sherpaw'
+import './google'
 import './local-audio'
 import './kokoro-local'
 import './nvidia'
 import './official'
 import './prompt-api'
+import './sherpaw'
+import './together'
 
 registerProviders(portableProviderDefinitions)
 

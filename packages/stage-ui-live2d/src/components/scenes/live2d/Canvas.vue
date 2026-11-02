@@ -96,7 +96,7 @@ async function initLive2DPixiStage(parent: HTMLDivElement) {
   // Set CSS styles to make canvas responsive to container
   pixiAppCanvas.value.style.width = '100%'
   pixiAppCanvas.value.style.height = '100%'
-  pixiAppCanvas.value.style.objectFit = 'cover'
+  pixiAppCanvas.value.style.objectFit = 'contain'
   pixiAppCanvas.value.style.display = 'block'
 
   parent.appendChild(pixiApp.value.view)

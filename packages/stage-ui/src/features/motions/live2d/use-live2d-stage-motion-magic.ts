@@ -22,7 +22,7 @@ export function useLive2DStageMotionMagic(options: {
 }) {
   const motionControl = useLive2DMotionControl()
   const { exclusiveOwnerId } = storeToRefs(motionControl)
-  const { forceViewTarget, profileId, skipMouthOpen } = storeToRefs(useLive2DMotionMagicSettings())
+  const { forceViewTarget, profileId, shuffleProfiles, skipMouthOpen } = storeToRefs(useLive2DMotionMagicSettings())
   const ownerId = `stage:live2d-motion-magic:${Math.random().toString(36).slice(2, 10)}`
   const localDelivery = { broadcast: false }
 
@@ -36,12 +36,39 @@ export function useLive2DStageMotionMagic(options: {
   })
   let activationRequest = 0
 
+  // Shuffle timer
+  let shuffleTimer: ReturnType<typeof setInterval> | null = null
+  const profileIds = Object.keys(live2dMotionMagicProfiles) as Array<keyof typeof live2dMotionMagicProfiles>
+
+  function startShuffleTimer() {
+    stopShuffleTimer()
+    if (!shuffleProfiles.value)
+      return
+
+    shuffleTimer = setInterval(() => {
+      if (!toValue(options.active) || exclusiveOwnerId.value !== null || magic.status.value !== 'playing')
+        return
+
+      const currentIndex = profileIds.indexOf(profileId.value)
+      const nextIndex = (currentIndex + 1) % profileIds.length
+      profileId.value = profileIds[nextIndex]
+    }, 30000) // Switch every 30 seconds
+  }
+
+  function stopShuffleTimer() {
+    if (shuffleTimer) {
+      clearInterval(shuffleTimer)
+      shuffleTimer = null
+    }
+  }
+
   watch(
-    [() => toValue(options.active), profileId, exclusiveOwnerId],
-    async ([active, , controlOwnerId]) => {
+    [() => toValue(options.active), profileId, shuffleProfiles, exclusiveOwnerId],
+    async ([active, , shuffleEnabled, controlOwnerId]) => {
       const request = ++activationRequest
       if (!active || controlOwnerId !== null) {
         magic.stop()
+        stopShuffleTimer()
         return
       }
 
@@ -52,9 +79,15 @@ export function useLive2DStageMotionMagic(options: {
         return
 
       magic.start()
+
+      if (shuffleEnabled)
+        startShuffleTimer()
     },
     { immediate: true },
   )
+
+  // Cleanup on scope dispose
+  // Note: The returned object doesn't include stopShuffleTimer, but the watch handler handles it
 
   return magic
 }

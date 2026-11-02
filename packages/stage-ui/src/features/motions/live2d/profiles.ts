@@ -1,7 +1,11 @@
 import type { Pose } from '@proj-lyra/model-driver-magic-live2d'
 
+import gesturesProject from './assets/gestures.json'
 import idleCalmProject from './assets/idle-calm.json'
+import lookingAroundProject from './assets/looking-around.json'
+import sleepingProject from './assets/sleeping.json'
 import speakingExcitedProject from './assets/speaking-excited.json'
+import walkingProject from './assets/walking.json'
 
 /** One normalized Live2D pose in a MAGIC dataset. */
 export interface Live2DMotionMagicSample extends Pose {
@@ -43,6 +47,38 @@ export const live2dMotionMagicProfiles = {
       format: speakingExcitedProject.source.format as 'lyra-live2d-motion/v6',
       durationMs: speakingExcitedProject.source.durationMs,
       samples: speakingExcitedProject.source.samples,
+    },
+  },
+  'walking': {
+    id: 'walking',
+    dataset: {
+      format: walkingProject.source.format as 'lyra-live2d-motion/v6',
+      durationMs: walkingProject.source.durationMs,
+      samples: walkingProject.source.samples,
+    },
+  },
+  'gestures': {
+    id: 'gestures',
+    dataset: {
+      format: gesturesProject.source.format as 'lyra-live2d-motion/v6',
+      durationMs: gesturesProject.source.durationMs,
+      samples: gesturesProject.source.samples,
+    },
+  },
+  'looking-around': {
+    id: 'looking-around',
+    dataset: {
+      format: lookingAroundProject.source.format as 'lyra-live2d-motion/v6',
+      durationMs: lookingAroundProject.source.durationMs,
+      samples: lookingAroundProject.source.samples,
+    },
+  },
+  'sleeping': {
+    id: 'sleeping',
+    dataset: {
+      format: sleepingProject.source.format as 'lyra-live2d-motion/v6',
+      durationMs: sleepingProject.source.durationMs,
+      samples: sleepingProject.source.samples,
     },
   },
 } as const satisfies Record<string, Live2DMotionMagicProfile>

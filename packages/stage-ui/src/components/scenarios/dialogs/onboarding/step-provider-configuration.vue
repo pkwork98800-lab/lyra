@@ -202,10 +202,12 @@ function getApiKeyPlaceholder(providerId: string): string {
     'openai': 'sk-...',
     'azure-openai': 'Azure OpenAI API Key',
     'anthropic': 'sk-ant-...',
-    'google-generative-ai': 'AI...',
+    'google-generative-ai': 'AIza...',
+    'google': 'AIza...',
     'openrouter-ai': 'sk-or-...',
     'deepseek': 'sk-...',
     'xai': 'xai-...',
+    'together': 'tgp_v1_...',
     'together-ai': 'togetherapi-...',
     'mistral-ai': 'mis-...',
     'moonshot-ai': 'ms-...',
@@ -214,6 +216,7 @@ function getApiKeyPlaceholder(providerId: string): string {
     'featherless-ai': 'fw-...',
     'nvidia': 'nvapi-...',
     'novita-ai': 'nvt-...',
+    'groq': 'gsk_...',
   }
 
   return placeholders[providerId] || 'API Key'

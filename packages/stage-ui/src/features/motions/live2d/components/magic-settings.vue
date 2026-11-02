@@ -10,7 +10,7 @@ import { live2dMotionMagicProfiles } from '../profiles'
 import { useLive2DMotionMagicSettings } from '../settings'
 
 const { t } = useI18n()
-const { forceViewTarget, profileId, skipMouthOpen } = storeToRefs(useLive2DMotionMagicSettings())
+const { forceViewTarget, profileId, shuffleProfiles, skipMouthOpen } = storeToRefs(useLive2DMotionMagicSettings())
 
 const profileCopyKeys = {
   'idle-calm': {
@@ -20,6 +20,22 @@ const profileCopyKeys = {
   'speaking-excited': {
     title: 'settings.live2d.animation.motion-driver.magic.profile.options.speaking-excited.title',
     description: 'settings.live2d.animation.motion-driver.magic.profile.options.speaking-excited.description',
+  },
+  'walking': {
+    title: 'settings.live2d.animation.motion-driver.magic.profile.options.walking.title',
+    description: 'settings.live2d.animation.motion-driver.magic.profile.options.walking.description',
+  },
+  'gestures': {
+    title: 'settings.live2d.animation.motion-driver.magic.profile.options.gestures.title',
+    description: 'settings.live2d.animation.motion-driver.magic.profile.options.gestures.description',
+  },
+  'looking-around': {
+    title: 'settings.live2d.animation.motion-driver.magic.profile.options.looking-around.title',
+    description: 'settings.live2d.animation.motion-driver.magic.profile.options.looking-around.description',
+  },
+  'sleeping': {
+    title: 'settings.live2d.animation.motion-driver.magic.profile.options.sleeping.title',
+    description: 'settings.live2d.animation.motion-driver.magic.profile.options.sleeping.description',
   },
 } as const satisfies Record<Live2DMotionMagicProfileId, { title: string, description: string }>
 
@@ -41,6 +57,12 @@ const profileOptions = computed(() => Object.values(live2dMotionMagicProfiles).m
       :description="t('settings.live2d.animation.motion-driver.magic.profile.description')"
       :options="profileOptions"
       layout="horizontal"
+    />
+    <FieldCheckbox
+      v-model="shuffleProfiles"
+      :label="t('settings.live2d.animation.motion-driver.magic.shuffle-profiles.title')"
+      :description="t('settings.live2d.animation.motion-driver.magic.shuffle-profiles.description')"
+      placement="right"
     />
     <FieldCheckbox
       v-model="skipMouthOpen"
