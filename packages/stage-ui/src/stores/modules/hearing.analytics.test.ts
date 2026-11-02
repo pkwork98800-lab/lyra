@@ -40,6 +40,11 @@ vi.mock('vue-i18n', () => ({
   }),
 }))
 
+// NOTICE:
+// Both tests use a 30s timeout because the cold import of ./hearing takes about 15s on
+// Windows development machines. The provider registry graph loads every provider module
+// at import time. Probe measurement at the baseline commit: 15.4s.
+// Removal condition: the hearing import graph loads in under 5s.
 describe('useHearingStore analytics lifecycle', () => {
   beforeEach(() => {
     setActivePinia(createPinia())
@@ -81,7 +86,7 @@ describe('useHearingStore analytics lifecycle', () => {
       char_count: 5,
       stream: false,
     })
-  }, 10000)
+  }, 30000)
 
   /**
    * @example
@@ -110,5 +115,5 @@ describe('useHearingStore analytics lifecycle', () => {
       stt_provider_id: 'openai-compatible-audio-transcription',
       error_code: 'permission_denied',
     })
-  }, 10000)
+  }, 30000)
 })
